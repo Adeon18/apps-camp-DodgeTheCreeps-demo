@@ -1,7 +1,12 @@
 extends Area2D
 
 signal hit
+signal camera_shake_requested
 signal item_pickup(area)
+
+
+
+var IS_WM_DEBUG: bool = true
 
 
 var speed: int = 200
@@ -9,6 +14,8 @@ var dash_speed: int = speed * 5
 
 var is_dashing: bool = false
 var can_dash: bool = true
+
+var is_hidden = false
 
 var screensize
 
@@ -28,7 +35,10 @@ onready var Hitbox: CollisionShape2D = get_node("CollisionShape2D")
 
 func _ready():
 	screensize = get_viewport_rect().size
-	hide()
+	if IS_WM_DEBUG:
+		screensize.x = 480
+		screensize.y = 720
+	hide_self()
 
 
 func _process(delta):
@@ -67,7 +77,7 @@ func _process(delta):
 
 
 func _input(event):
-	if Input.is_action_just_pressed("dash") and !is_dashing and can_dash:
+	if Input.is_action_just_pressed("dash") and !is_dashing and can_dash and !is_hidden:
 		start_dash()
 
 
@@ -75,6 +85,7 @@ func start(pos):
 	position = pos
 	show()
 	Hitbox.disabled = false
+	is_hidden = false
 
 
 func start_dash():
@@ -103,10 +114,15 @@ func spawn_dash_ghost():
 	dghost.scale = SpriteNode.scale
 
 
+func hide_self():
+	hide()
+	is_hidden = true
+
 
 func _on_Player_body_entered(body):
-	hide()
+	hide_self()
 	emit_signal("hit")
+	emit_signal("camera_shake_requested")
 
 
 func _on_Player_area_entered(area):

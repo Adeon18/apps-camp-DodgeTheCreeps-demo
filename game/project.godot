@@ -10,11 +10,6 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Item",
-"class": "Coin",
-"language": "GDScript",
-"path": "res://src/Items/Coin.gd"
-}, {
-"base": "Item",
 "class": "Freeze",
 "language": "GDScript",
 "path": "res://src/Items/Freeze.gd"
@@ -25,7 +20,6 @@ _global_script_classes=[ {
 "path": "res://src/Items/Item.gd"
 } ]
 _global_script_class_icons={
-"Coin": "",
 "Freeze": "",
 "Item": ""
 }
@@ -40,6 +34,10 @@ config/icon="res://icon.png"
 
 window/size/width=480
 window/size/height=720
+
+[global]
+
+window=false
 
 [input]
 

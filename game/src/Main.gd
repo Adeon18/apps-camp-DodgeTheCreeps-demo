@@ -4,6 +4,8 @@ extends Node2D
 export var Mob: PackedScene
 export var Coin: PackedScene
 
+var IS_WM_DEBUG: bool = true
+
 var screensize
 
 var score: int = 0
@@ -11,6 +13,10 @@ var score: int = 0
 func _ready():
 	randomize()
 	screensize = get_viewport_rect().size
+	print(screensize)
+	if IS_WM_DEBUG:
+		screensize.x = 480
+		screensize.y = 720
 	print(screensize)
 
 func game_over():

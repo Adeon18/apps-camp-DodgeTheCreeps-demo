@@ -3,11 +3,28 @@ extends Area2D
 signal hit
 signal item_pickup(area)
 
-export var speed: int = 200
+
+var speed: int = 200
+var dash_speed: int = speed * 5
+
+var is_dashing: bool = false
+var can_dash: bool = true
+
 var screensize
 
 var direction: Vector2 = Vector2.ZERO
 var velocity: Vector2 = Vector2.ZERO
+
+
+var DashGhost = preload("res://src/Actors/DashGhost.tscn")
+
+
+onready var SpriteNode: AnimatedSprite = get_node("AnimatedSprite")
+onready var DashTimer: Timer = get_node("DashTimer")
+onready var DashCooldown: Timer = get_node("DashCooldown")
+onready var GhostCooldownTimer: Timer = get_node("GhostSpawnCooldown")
+onready var Hitbox: CollisionShape2D = get_node("CollisionShape2D")
+
 
 func _ready():
 	screensize = get_viewport_rect().size
@@ -39,18 +56,52 @@ func _process(delta):
 		$AnimatedSprite.animation = "up"
 		$AnimatedSprite.flip_v = direction.y > 0
 	
-	velocity = direction * speed
+	if is_dashing:
+		velocity = direction * dash_speed
+	else:
+		velocity = direction * speed
 	
 	position += velocity * delta
 	position.x = clamp(position.x, 0, screensize.x)
 	position.y = clamp(position.y, 0, screensize.y)
 
 
+func _input(event):
+	if Input.is_action_just_pressed("dash") and !is_dashing and can_dash:
+		start_dash()
+
 
 func start(pos):
 	position = pos
 	show()
-	$CollisionShape2D.disabled = false
+	Hitbox.disabled = false
+
+
+func start_dash():
+	can_dash = false
+	is_dashing = true
+	Hitbox.disabled = true
+	DashTimer.start()
+	GhostCooldownTimer.start()
+	
+
+
+func stop_dash():
+	Hitbox.disabled = false
+	is_dashing = false
+	DashCooldown.start()
+	GhostCooldownTimer.stop()
+
+
+func spawn_dash_ghost():
+	var dghost = DashGhost.instance()
+	get_parent().add_child(dghost)
+	
+	dghost.global_position = global_position
+	dghost.texture = SpriteNode.get_sprite_frames().get_frame(SpriteNode.animation, SpriteNode.get_frame())
+	dghost.flip_h = false if scale.x == 1 else true
+	dghost.scale = SpriteNode.scale
+
 
 
 func _on_Player_body_entered(body):
@@ -61,3 +112,13 @@ func _on_Player_body_entered(body):
 func _on_Player_area_entered(area):
 	if area.is_in_group("coins"):
 		emit_signal("item_pickup", area)
+
+
+func _on_DashTimer_timeout():
+	stop_dash()
+
+func _on_DashCooldown_timeout():
+	can_dash = true
+
+func _on_GhostSpawnCooldown_timeout():
+	spawn_dash_ghost()

@@ -1,7 +1,7 @@
 extends Area2D
 
 signal hit
-signal coin_pickup
+signal item_pickup(area)
 
 
 var speed: int = 200
@@ -111,7 +111,7 @@ func _on_Player_body_entered(body):
 
 func _on_Player_area_entered(area):
 	if area.is_in_group("coins"):
-		emit_signal("coin_pickup")
+		emit_signal("item_pickup", area)
 
 
 func _on_DashTimer_timeout():
@@ -119,7 +119,6 @@ func _on_DashTimer_timeout():
 
 func _on_DashCooldown_timeout():
 	can_dash = true
-
 
 func _on_GhostSpawnCooldown_timeout():
 	spawn_dash_ghost()

@@ -1,9 +1,10 @@
 extends Item
 
-class_name Coin
+class_name Freeze
+
 
 func _ready():
 	pass
 
 func get_name():
-	return 'Coin'
+	return "Freeze"

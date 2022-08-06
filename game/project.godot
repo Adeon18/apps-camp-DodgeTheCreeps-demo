@@ -8,6 +8,28 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Item",
+"class": "Coin",
+"language": "GDScript",
+"path": "res://src/Items/Coin.gd"
+}, {
+"base": "Item",
+"class": "Freeze",
+"language": "GDScript",
+"path": "res://src/Items/Freeze.gd"
+}, {
+"base": "Area2D",
+"class": "Item",
+"language": "GDScript",
+"path": "res://src/Items/Item.gd"
+} ]
+_global_script_class_icons={
+"Coin": "",
+"Freeze": "",
+"Item": ""
+}
+
 [application]
 
 config/name="Dodge The Creeps"

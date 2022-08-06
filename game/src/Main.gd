@@ -29,7 +29,7 @@ func new_game():
 func _on_MobTimer_timeout():
 	$MobPath/MobSpawnLocation.set_offset(randi())
 	var mob = Mob.instance()
-	add_child(mob)
+	$Enemies.add_child(mob)
 	var direction = $MobPath/MobSpawnLocation.rotation + PI / 2
 	mob.position = $MobPath/MobSpawnLocation.position
 	direction += rand_range(-PI / 4, PI / 4)
@@ -48,13 +48,18 @@ func _on_StartTimer_timeout():
 	$CoinTimer.start()
 
 
-func _on_Player_coin_pickup():
-	score += 2
-	$HUD.update_score(score)
-
 
 func _on_CoinTimer_timeout():
 	var coin_position = Vector2(randi()%int(screensize.x), randi()%int(screensize.y))
 	var coin = Coin.instance()
 	add_child(coin)
 	coin.position = coin_position
+
+
+func _on_Player_item_pickup(area):
+	if area.get_name() == "Freeze":
+		for node in $Enemies.get_children():
+			node.freeze()
+	elif area.get_name() == "Coin":
+		score += 2
+		$HUD.update_score(score)

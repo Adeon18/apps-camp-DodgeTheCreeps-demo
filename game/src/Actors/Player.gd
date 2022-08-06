@@ -1,7 +1,7 @@
 extends Area2D
 
 signal hit
-signal coin_pickup
+signal item_pickup(area)
 
 export var speed: int = 200
 var screensize
@@ -60,4 +60,4 @@ func _on_Player_body_entered(body):
 
 func _on_Player_area_entered(area):
 	if area.is_in_group("coins"):
-		emit_signal("coin_pickup")
+		emit_signal("item_pickup", area)

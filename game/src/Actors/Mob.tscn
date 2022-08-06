@@ -10,20 +10,20 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 2 ), ExtResource( 6 ) ],
+"frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
 "loop": true,
-"name": "walk",
-"speed": 4.0
+"name": "fly",
+"speed": 3.0
 }, {
 "frames": [ ExtResource( 1 ), ExtResource( 5 ) ],
 "loop": true,
 "name": "swim",
 "speed": 4.0
 }, {
-"frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
+"frames": [ ExtResource( 2 ), ExtResource( 6 ) ],
 "loop": true,
-"name": "fly",
-"speed": 3.0
+"name": "walk",
+"speed": 4.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
@@ -47,4 +47,9 @@ shape = SubResource( 2 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 
+[node name="FreezeTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="timeout" from="FreezeTimer" to="." method="_on_FreezeTimer_timeout"]

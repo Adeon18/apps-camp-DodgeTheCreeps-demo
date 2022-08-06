@@ -14,6 +14,7 @@ func _ready():
 
 
 func _process(delta):
+	direction = Vector2.ZERO
 	if Input.is_action_pressed("ui_right"):
 		direction.x += 1
 	if Input.is_action_pressed("ui_left"):
@@ -54,4 +55,3 @@ func start(pos):
 func _on_Player_body_entered(body):
 	hide()
 	emit_signal("hit")
-	$CollisionShape2D.disabled = true

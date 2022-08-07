@@ -5,7 +5,7 @@
 [ext_resource path="res://src/Actors/Mob.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/UI/HUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/Items/Coin.tscn" type="PackedScene" id=5]
-[ext_resource path="res://src/Items/Freeze.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/Items/Item.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/Camera/CustomCamera2D.tscn" type="PackedScene" id=7]
 
 [sub_resource type="Curve2D" id=1]
@@ -31,6 +31,7 @@ adjustment_color_correction = SubResource( 3 )
 script = ExtResource( 2 )
 Mob = ExtResource( 3 )
 Coin = ExtResource( 5 )
+Item = ExtResource( 6 )
 
 [node name="Camera2D" parent="." instance=ExtResource( 7 )]
 current = true
@@ -49,6 +50,9 @@ damp_easing = 0.2
 [node name="StartTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="ItemTimer" type="Timer" parent="."]
+wait_time = 7.0
 
 [node name="CoinTimer" type="Timer" parent="."]
 wait_time = 4.0
@@ -75,4 +79,5 @@ environment = SubResource( 4 )
 [connection signal="timeout" from="MobTimer" to="." method="_on_MobTimer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
+[connection signal="timeout" from="ItemTimer" to="." method="_on_ItemTimer_timeout"]
 [connection signal="timeout" from="CoinTimer" to="." method="_on_CoinTimer_timeout"]

@@ -4,12 +4,10 @@ signal hit
 signal camera_shake_requested
 signal item_pickup(area)
 
-
-
 var IS_WM_DEBUG: bool = true
 
-
 var speed: int = 200
+var base_speed = speed
 var dash_speed: int = speed * 5
 
 var is_dashing: bool = false
@@ -128,7 +126,7 @@ func _on_Player_body_entered(body):
 
 
 func _on_Player_area_entered(area):
-	if area.is_in_group("coins"):
+	if area.is_in_group("items"):
 		emit_signal("item_pickup", area)
 
 
@@ -140,3 +138,12 @@ func _on_DashCooldown_timeout():
 
 func _on_GhostSpawnCooldown_timeout():
 	spawn_dash_ghost()
+
+
+func _on_SpeedUpTimer_timeout():
+	speed = base_speed
+
+
+func change_speed(new_speed):
+	speed = new_speed
+	$SpeedUpTimer.start(3)

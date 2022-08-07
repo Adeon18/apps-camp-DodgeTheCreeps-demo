@@ -13,7 +13,6 @@ var score: int = 0
 func _ready():
 	randomize()
 	screensize = get_viewport_rect().size
-	print(screensize)
 	if IS_WM_DEBUG:
 		screensize.x = 480
 		screensize.y = 720

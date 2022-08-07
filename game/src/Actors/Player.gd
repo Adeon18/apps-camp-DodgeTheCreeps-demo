@@ -41,14 +41,15 @@ func _ready():
 
 func _process(delta):
 	direction = Vector2.ZERO
-	if Input.is_action_pressed("ui_right"):
-		direction.x += 1
-	if Input.is_action_pressed("ui_left"):
-		direction.x += -1
-	if Input.is_action_pressed("ui_down"):
-		direction.y += 1
-	if Input.is_action_pressed("ui_up"):
-		direction.y -= 1
+	if !is_hidden:
+		if Input.is_action_pressed("ui_right"):
+			direction.x += 1
+		if Input.is_action_pressed("ui_left"):
+			direction.x += -1
+		if Input.is_action_pressed("ui_down"):
+			direction.y += 1
+		if Input.is_action_pressed("ui_up"):
+			direction.y -= 1
 	
 	if direction.length() > 0:
 		direction = direction.normalized()
@@ -81,7 +82,7 @@ func _input(event):
 
 func start(pos):
 	position = pos
-	show()
+	$AnimatedSprite.show()
 	Hitbox.disabled = false
 	is_hidden = false
 
@@ -113,7 +114,7 @@ func spawn_dash_ghost():
 
 
 func hide_self():
-	hide()
+	$AnimatedSprite.hide()
 	is_hidden = true
 
 
@@ -121,6 +122,7 @@ func _on_Player_body_entered(body):
 	hide_self()
 	emit_signal("hit")
 	emit_signal("camera_shake_requested")
+	$DeathParticle.emitting = true
 	Global.check_personal_best()
 	Global.save_data()
 

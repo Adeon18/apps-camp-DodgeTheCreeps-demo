@@ -16,8 +16,14 @@ func freeze():
 	set_linear_velocity(Vector2.ZERO)
 	$FreezeTimer.start()
 
-func _on_VisibilityNotifier2D_screen_exited():
+func die():
+	$DeathParticle.emitting = true
+	$AnimatedSprite.modulate.a = 0.0
+	yield(get_tree().create_timer(1), "timeout")
 	queue_free()
+
+func _on_VisibilityNotifier2D_screen_exited():
+	die()
 
 func _on_FreezeTimer_timeout():
 	set_linear_velocity(lin_vel)

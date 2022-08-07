@@ -29,7 +29,7 @@ func game_over():
 	for node in $Items.get_children():
 		node.queue_free()
 	for node in $Enemies.get_children():
-		node.queue_free()
+		node.die()
 
 func new_game():
 	Global.score = 0
@@ -83,7 +83,7 @@ func _on_Player_item_pickup(area):
 		$Player.change_speed(300)
 	elif area.get_type() == "kill_all":
 		for node in $Enemies.get_children():
-			node.queue_free()
+			node.die()
 	elif area.get_type() == "size_down":
 		$Player.size_down()
 		

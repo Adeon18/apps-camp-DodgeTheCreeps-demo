@@ -4,13 +4,17 @@ extends Node2D
 export var Mob: PackedScene
 export var Coin: PackedScene
 
+var IS_WM_DEBUG: bool = true
+
 var screensize
 
-var score: int = 0
 
 func _ready():
 	randomize()
 	screensize = get_viewport_rect().size
+	if IS_WM_DEBUG:
+		screensize.x = 480
+		screensize.y = 720
 	print(screensize)
 
 func game_over():
@@ -19,10 +23,10 @@ func game_over():
 	$HUD.show_game_over()
 
 func new_game():
-	score = 0
+	Global.score = 0
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
-	$HUD.update_score(score)
+	$HUD.update_score(Global.score)
 	$HUD.show_message("Get Ready")
 
 
@@ -38,8 +42,8 @@ func _on_MobTimer_timeout():
 
 
 func _on_ScoreTimer_timeout():
-	score += 1
-	$HUD.update_score(score)
+	Global.score += 1
+	$HUD.update_score(Global.score)
 
 
 func _on_StartTimer_timeout():
@@ -61,5 +65,5 @@ func _on_Player_item_pickup(area):
 		for node in $Enemies.get_children():
 			node.freeze()
 	elif area.get_name() == "Coin":
-		score += 2
-		$HUD.update_score(score)
+		Global.score += 2
+		$HUD.update_score(Global.score)

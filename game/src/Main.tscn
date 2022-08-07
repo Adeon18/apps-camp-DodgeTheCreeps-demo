@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/Actors/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Main.gd" type="Script" id=2]
@@ -6,16 +6,37 @@
 [ext_resource path="res://src/UI/HUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/Items/Coin.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/Items/Freeze.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/Camera/CustomCamera2D.tscn" type="PackedScene" id=7]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 480, 0, 0, 0, 0, 0, 480, 720, 0, 0, 0, 0, 0, 720, 0, 0, 0, 0, 0, 0 )
 }
 
+[sub_resource type="Gradient" id=2]
+colors = PoolColorArray( 0, 0, 0, 1, 0.858984, 0.812009, 0.812009, 1 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+
+[sub_resource type="Environment" id=4]
+background_mode = 4
+background_color = Color( 0.572549, 0.101961, 0.101961, 1 )
+adjustment_enabled = true
+adjustment_brightness = 1.2
+adjustment_saturation = 1.5
+adjustment_color_correction = SubResource( 3 )
+
 [node name="Main" type="Node2D"]
 script = ExtResource( 2 )
 Mob = ExtResource( 3 )
 Coin = ExtResource( 5 )
+
+[node name="Camera2D" parent="." instance=ExtResource( 7 )]
+current = true
+amplitude = 16.0
+_duration = 0.5
+damp_easing = 0.2
 
 [node name="HUD" parent="." instance=ExtResource( 4 )]
 
@@ -44,6 +65,9 @@ curve = SubResource( 1 )
 
 [node name="Item" parent="." instance=ExtResource( 6 )]
 position = Vector2( 152, 128 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 4 )
 
 [connection signal="start_game" from="HUD" to="." method="new_game"]
 [connection signal="hit" from="Player" to="." method="game_over"]

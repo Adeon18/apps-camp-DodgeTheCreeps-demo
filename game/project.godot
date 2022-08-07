@@ -10,11 +10,6 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Item",
-"class": "Coin",
-"language": "GDScript",
-"path": "res://src/Items/Coin.gd"
-}, {
-"base": "Item",
 "class": "Freeze",
 "language": "GDScript",
 "path": "res://src/Items/Freeze.gd"
@@ -25,7 +20,6 @@ _global_script_classes=[ {
 "path": "res://src/Items/Item.gd"
 } ]
 _global_script_class_icons={
-"Coin": "",
 "Freeze": "",
 "Item": ""
 }
@@ -36,10 +30,26 @@ config/name="Dodge The Creeps"
 run/main_scene="res://src/Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Global="*res://src/GlobalData/Global.gd"
+
 [display]
 
 window/size/width=480
 window/size/height=720
+
+[global]
+
+window=false
+
+[input]
+
+dash={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [physics]
 

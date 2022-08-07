@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0.0198371, 0.600331 ), 0.0, 0.643493, 0, 0, Vector2( 0.314852, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.589522, 0.733001 ), -1.32452, -1.32452, 0, 0, Vector2( 1, 0.227197 ), -0.331444, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=3]
+curve = SubResource( 2 )
+
+[sub_resource type="ParticlesMaterial" id=1]
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 60.0
+initial_velocity_random = 0.57
+angular_velocity = 100.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+tangential_accel = 10.0
+tangential_accel_random = 1.0
+angle = 180.0
+angle_random = 1.0
+scale = 20.0
+scale_curve = SubResource( 3 )
+color = Color( 0.713726, 0.533333, 0.533333, 1 )
+
+[node name="DeathParticle" type="Particles2D"]
+amount = 20
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 1 )

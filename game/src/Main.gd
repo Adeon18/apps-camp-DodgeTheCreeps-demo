@@ -10,7 +10,7 @@ var screensize
 
 var can_spawn_new_enemies: bool = true
 
-var item_types = ["freeze"]
+var item_types = ["freeze", "kill_all", "speed", "size_down"]
 
 func _ready():
 	randomize()

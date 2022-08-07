@@ -9,18 +9,12 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Item",
-"class": "Freeze",
-"language": "GDScript",
-"path": "res://src/Items/Freeze.gd"
-}, {
 "base": "Area2D",
 "class": "Item",
 "language": "GDScript",
 "path": "res://src/Items/Item.gd"
 } ]
 _global_script_class_icons={
-"Freeze": "",
 "Item": ""
 }
 

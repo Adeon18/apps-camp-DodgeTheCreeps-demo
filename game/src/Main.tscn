@@ -67,11 +67,10 @@ curve = SubResource( 1 )
 
 [node name="Enemies" type="Node2D" parent="."]
 
-[node name="Item" parent="." instance=ExtResource( 6 )]
-position = Vector2( 152, 128 )
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 4 )
+
+[node name="Items" type="Node" parent="."]
 
 [connection signal="start_game" from="HUD" to="." method="new_game"]
 [connection signal="hit" from="Player" to="." method="game_over"]

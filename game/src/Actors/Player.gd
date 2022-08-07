@@ -143,7 +143,17 @@ func _on_GhostSpawnCooldown_timeout():
 func _on_SpeedUpTimer_timeout():
 	speed = base_speed
 
-
 func change_speed(new_speed):
 	speed = new_speed
 	$SpeedUpTimer.start(3)
+
+
+func size_down():
+	scale.x = 0.5
+	scale.y = 0.5
+	$SizeTimer.start(3)
+
+
+func _on_SizeTimer_timeout():
+	scale.x = 1
+	scale.y = 1

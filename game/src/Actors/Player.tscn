@@ -47,9 +47,13 @@ wait_time = 0.03
 [node name="SpeedUpTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="SizeTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]
 [connection signal="timeout" from="DashTimer" to="." method="_on_DashTimer_timeout"]
 [connection signal="timeout" from="DashCooldown" to="." method="_on_DashCooldown_timeout"]
 [connection signal="timeout" from="GhostSpawnCooldown" to="." method="_on_GhostSpawnCooldown_timeout"]
 [connection signal="timeout" from="SpeedUpTimer" to="." method="_on_SpeedUpTimer_timeout"]
+[connection signal="timeout" from="SizeTimer" to="." method="_on_SizeTimer_timeout"]

@@ -8,8 +8,9 @@ var IS_WM_DEBUG: bool = true
 
 var screensize
 
+var can_spawn_new_enemies: bool = true
 
-var item_types = ["freeze", "speed"]
+var item_types = ["freeze"]
 
 func _ready():
 	randomize()
@@ -25,6 +26,10 @@ func game_over():
 	$HUD.show_game_over()
 	$CoinTimer.stop()
 	$ItemTimer.stop()
+	for node in $Items.get_children():
+		node.queue_free()
+	for node in $Enemies.get_children():
+		node.queue_free()
 
 func new_game():
 	Global.score = 0
@@ -35,14 +40,15 @@ func new_game():
 
 
 func _on_MobTimer_timeout():
-	$MobPath/MobSpawnLocation.set_offset(randi())
-	var mob = Mob.instance()
-	$Enemies.add_child(mob)
-	var direction = $MobPath/MobSpawnLocation.rotation + PI / 2
-	mob.position = $MobPath/MobSpawnLocation.position
-	direction += rand_range(-PI / 4, PI / 4)
-	mob.rotation = direction
-	mob.set_linear_velocity(Vector2(rand_range(mob.min_speed, mob.max_speed), 0).rotated(direction))
+	if can_spawn_new_enemies:
+		$MobPath/MobSpawnLocation.set_offset(randi())
+		var mob = Mob.instance()
+		$Enemies.add_child(mob)
+		var direction = $MobPath/MobSpawnLocation.rotation + PI / 2
+		mob.position = $MobPath/MobSpawnLocation.position
+		direction += rand_range(-PI / 4, PI / 4)
+		mob.rotation = direction
+		mob.set_linear_velocity(Vector2(rand_range(mob.min_speed, mob.max_speed), 0).rotated(direction))
 
 
 func _on_ScoreTimer_timeout():
@@ -56,12 +62,10 @@ func _on_StartTimer_timeout():
 	$CoinTimer.start()
 	$ItemTimer.start()
 
-
-
 func _on_CoinTimer_timeout():
 	var coin_position = Vector2(randi()%int(screensize.x), randi()%int(screensize.y))
 	var coin = Coin.instance()
-	add_child(coin)
+	$Items.add_child(coin)
 	coin.position = coin_position
 
 
@@ -69,17 +73,26 @@ func _on_Player_item_pickup(area):
 	if area.get_type() == "freeze":
 		for node in $Enemies.get_children():
 			node.freeze()
+		can_spawn_new_enemies = false
+		yield(get_tree().create_timer(3), "timeout")
+		can_spawn_new_enemies = true
 	elif area.get_type() == "Coin":
 		Global.score += 5
 		$HUD.update_score(Global.score)
 	elif area.get_type() == "speed":
 		$Player.change_speed(300)
+	elif area.get_type() == "kill_all":
+		for node in $Enemies.get_children():
+			node.queue_free()
+	elif area.get_type() == "size_down":
+		$Player.size_down()
+		
 
 
 func _on_ItemTimer_timeout():
 	var item_position = Vector2(randi()%int(screensize.x), randi()%int(screensize.y))
 	var item = Item.instance()
-	add_child(item)
+	$Items.add_child(item)
 	item.position = item_position
 	item.set_type(item_types[randi()%item_types.size()])
 

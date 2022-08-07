@@ -30,6 +30,10 @@ config/name="Dodge The Creeps"
 run/main_scene="res://src/Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Global="*res://src/GlobalData/Global.gd"
+
 [display]
 
 window/size/width=480

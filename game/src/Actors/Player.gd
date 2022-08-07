@@ -121,6 +121,8 @@ func _on_Player_body_entered(body):
 	hide_self()
 	emit_signal("hit")
 	emit_signal("camera_shake_requested")
+	Global.check_personal_best()
+	Global.save_data()
 
 
 func _on_Player_area_entered(area):

@@ -70,7 +70,7 @@ func _on_Player_item_pickup(area):
 		for node in $Enemies.get_children():
 			node.freeze()
 	elif area.get_type() == "Coin":
-		score += 5
+		Global.score += 5
 		$HUD.update_score(Global.score)
 	elif area.get_type() == "speed":
 		$Player.change_speed(300)

@@ -45,6 +45,7 @@ func load_data():
 		
 		for attr in global_data.keys():
 			set(attr, global_data[attr])
+			print(attr, global_data[attr])
 
 	save_file.close()
 

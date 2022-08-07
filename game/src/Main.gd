@@ -8,7 +8,6 @@ var IS_WM_DEBUG: bool = true
 
 var screensize
 
-var score: int = 0
 
 var item_types = ["freeze", "speed"]
 
@@ -28,10 +27,10 @@ func game_over():
 	$ItemTimer.stop()
 
 func new_game():
-	score = 0
+	Global.score = 0
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
-	$HUD.update_score(score)
+	$HUD.update_score(Global.score)
 	$HUD.show_message("Get Ready")
 
 
@@ -47,8 +46,8 @@ func _on_MobTimer_timeout():
 
 
 func _on_ScoreTimer_timeout():
-	score += 1
-	$HUD.update_score(score)
+	Global.score += 1
+	$HUD.update_score(Global.score)
 
 
 func _on_StartTimer_timeout():
@@ -71,8 +70,8 @@ func _on_Player_item_pickup(area):
 		for node in $Enemies.get_children():
 			node.freeze()
 	elif area.get_type() == "Coin":
-		score += 5
-		$HUD.update_score(score)
+		Global.score += 5
+		$HUD.update_score(Global.score)
 	elif area.get_type() == "speed":
 		$Player.change_speed(300)
 
@@ -83,3 +82,4 @@ func _on_ItemTimer_timeout():
 	add_child(item)
 	item.position = item_position
 	item.set_type(item_types[randi()%item_types.size()])
+
